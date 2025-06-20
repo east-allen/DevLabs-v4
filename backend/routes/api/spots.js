@@ -2,7 +2,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 
-const { requireAuth } = require('../../utils/auth');
+// Authentication removed for simplified deployment
 const { Spot, Review, User, Booking, SpotImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
