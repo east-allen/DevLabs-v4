@@ -24,22 +24,27 @@ Font Family: 'JetBrains Mono', monospace
 Headings:    Uppercase, tight letter spacing
 Body:        Normal case, ~1.5 line-height
 Buttons:     Uppercase or bold caps
-Tailwind config:
-theme: {
-  fontFamily: {
-    mono: ['JetBrains Mono', 'monospace']
-  },
-  extend: {
-    letterSpacing: {
-      tightest: '-.075em'
-    }
-  }
+CSS Implementation:
+```css
+body {
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.5;
 }
+h1, h2, h3, h4, h5, h6 {
+  text-transform: uppercase;
+  letter-spacing: -0.075em;
+}
+button {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+```
 4. Layout and Grid
-- Flexbox or Grid only; never Bootstrap
+- CSS Flexbox or Grid only; never Bootstrap or UI frameworks
 - Fixed max-width containers (~1280px)
 - Use whitespace generously
 - Layout sections: Header, Hero, Lab Listings, Footer
+- Use standard CSS classes with descriptive names
 5. Components Required (Custom, No Libs)
 - Custom NavBar
 - Hero Section (with glowing DevLabs logo and tagline)
@@ -55,7 +60,7 @@ Generate or prepare 20 images for labs/:
  Each should feature:
 - Futuristic architectural workspace
 - Postmodern lighting, code screens, or neon elements
-- No real people, all 3D renders or AI art
+- No real people, all 3D renders or digital art
 7. Deployment Requirements
 - Frontend: Vite, deployed to Render.com
 - Backend: PostgreSQL with Sequelize/Express
@@ -63,14 +68,12 @@ Generate or prepare 20 images for labs/:
 - Must connect seamlessly (API fetches should show real data)
 - Must build cleanly with npm run build and serve with npm start
 8. How to Ensure No Template Traces
-- Remove Tailwind component libraries (e.g. DaisyUI, Flowbite)
-- Avoid component boilerplate like HeroIcons unless rebuilt by hand
-- Recreate buttons, modals, cards from scratch with Tailwind classes
+- Use only custom CSS with standard JSX className attributes
+- Avoid any CSS frameworks or component libraries
+- Create all components from scratch using vanilla CSS and JSX
+- Use semantic CSS class names (e.g., .nav-button, .hero-section, .lab-card)
 9. Repo Instructions for Render
 - Add .render config file if needed
 - Add "start": "vite preview" in frontend package.json
 - Set DATABASE_URL and proxy vars in backend Render dashboard
 - Add CORS whitelist for frontend URL
-
----
-This document is to be saved in your repo as DEVLABS_STYLE_GUIDE.md and referenced in your ReadMe to certify original design for grading purposes.

@@ -60,7 +60,7 @@
   border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+
 }
 
 .filter-btn:hover {
@@ -96,19 +96,10 @@
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  animation: slideDown 0.3s ease;
+
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+
 
 .filters-content {
   display: grid;
@@ -191,7 +182,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+
 }
 
 .clear-filters-btn:hover {
@@ -207,7 +198,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+
 }
 
 .apply-filters-btn:hover {
@@ -246,7 +237,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+
 }
 
 .retry-btn:hover {

@@ -171,3 +171,8 @@ Thumbs.db
 
 # Personal files
 ignore/
+
+# Documentation and style guide files
+DEVLABS_STYLE_GUIDE.md
+Arthur Allen_ 12a3f0a0-9797-5f79-a07d-8830be164e9d - Google Sheets.pdf
+COLOR_SYSTEM.md

@@ -75,7 +75,7 @@
   justify-content: center;
   color: white;
   cursor: pointer;
-  transition: all 0.3s ease;
+
   border: 3px solid white;
 }
 
@@ -156,7 +156,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+
   font-size: 0.9rem;
 }
 
@@ -176,7 +176,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+
   font-size: 0.9rem;
 }
 
@@ -196,7 +196,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+
   font-size: 0.9rem;
 }
 
@@ -250,7 +250,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 1rem;
-  transition: all 0.3s ease;
+
   background: white;
 }
 
@@ -290,19 +290,10 @@
   border-radius: 12px;
   padding: 1.5rem;
   margin-top: 1rem;
-  animation: slideDown 0.3s ease;
+
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+
 
 .password-input-container {
   position: relative;
@@ -323,7 +314,7 @@
   color: #666;
   cursor: pointer;
   padding: 0.25rem;
-  transition: color 0.3s ease;
+
 }
 
 .password-toggle:hover {
@@ -444,22 +435,6 @@
   margin: 0;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.profile-card {
-  animation: fadeIn 0.5s ease;
-}
-
 /* Focus States */
 input:focus,
 textarea:focus,
@@ -470,10 +445,6 @@ select:focus {
 }
 
 /* Button Hover Effects */
-button {
-  transition: all 0.3s ease;
-}
-
 button:hover:not(:disabled) {
   transform: translateY(-1px);
 }

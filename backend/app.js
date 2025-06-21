@@ -2,15 +2,18 @@ const express = require('express');
 require('express-async-errors');
 const morgan = require('morgan');
 const cors = require('cors');
+const csurf = require('csurf');
 const helmet = require('helmet');
 
 const { environment } = require('./config');
+const { restoreUser } = require('./utils/auth');
 const isProduction = environment === 'production';
 
 const app = express();
 
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Security Middleware
 if (!isProduction) {
@@ -24,6 +27,20 @@ app.use(
     policy: 'cross-origin'
   })
 );
+
+// Set the _csrf token and create req.csrfToken method
+app.use(
+  csurf({
+    cookie: {
+      secure: isProduction,
+      sameSite: isProduction && "Lax",
+      httpOnly: true
+    }
+  })
+);
+
+// Restore user session
+app.use(restoreUser);
 
 const routes = require('./routes');
 app.use(routes); // Connect all the routes
@@ -55,7 +72,9 @@ app.use((err, _req, _res, next) => {
 // Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
-  console.error(err);
+  if (!isProduction) {
+    console.error(err);
+  }
   res.json({
     title: err.title || 'Server Error',
     message: err.message,

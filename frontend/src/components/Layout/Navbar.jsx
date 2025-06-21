@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../store/slices/authSlice';
@@ -26,23 +26,30 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <img src="/devlabs-logo.jpg" alt="DevLabs Logo" className="logo-image" />
-          <div className="logo-content">
-            <span className="logo-text">DevLabs</span>
-            <span className="logo-subtitle">Workspace Management Platform</span>
-          </div>
+          <img 
+            src="/favicon.png" 
+            alt="DevLabs Favicon" 
+            className="navbar-favicon"
+            style={{
+              height: '22px',
+              width: '22px',
+              objectFit: 'contain',
+              marginRight: '8px'
+            }}
+          />
+          <img 
+            src="/devlabs-logo.jpg" 
+            alt="DevLabs" 
+            className="navbar-wordmark"
+            style={{
+              height: '34px',
+              width: 'auto',
+              objectFit: 'contain'
+            }}
+          />
         </Link>
 
         <div className="navbar-menu">
-          <div className="navbar-search">
-            <input
-              type="text"
-              placeholder="Find your ideal workspace..."
-              className="search-input"
-            />
-            <button className="search-button">Search</button>
-          </div>
-
           <div className={`navbar-nav ${isMenuOpen ? 'active' : ''}`}>
             <Link to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>
               Home

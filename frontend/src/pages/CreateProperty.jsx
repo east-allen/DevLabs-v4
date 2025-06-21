@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createProperty } from '../store/slices/propertySlice';
+import { createSpot } from '../store/slices/spotsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faHome, 
@@ -31,7 +31,7 @@ import './CreateProperty.css';
 const CreateProperty = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, error } = useSelector((state) => state.properties);
+  const { isLoading, error } = useSelector((state) => state.spots);
   const { user } = useSelector((state) => state.auth);
   
   const [currentStep, setCurrentStep] = useState(1);
@@ -223,10 +223,10 @@ const CreateProperty = () => {
         submitData.append(`images`, file);
       });
       
-      await dispatch(createProperty(submitData)).unwrap();
+      await dispatch(createSpot(submitData)).unwrap();
       navigate('/profile?tab=properties');
     } catch (error) {
-      console.error('Failed to create property:', error);
+      // Error is handled by Redux state
     }
   };
 

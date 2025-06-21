@@ -15,7 +15,7 @@
   border: 3px solid #f3f3f3;
   border-top: 3px solid #ff5a5f;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+
 }
 
 /* Size variants */
@@ -44,10 +44,7 @@
   text-align: center;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+
 
 /* Alternative spinner styles */
 .loading-spinner.dots .spinner {
@@ -65,45 +62,27 @@
   position: absolute;
   border-radius: 50%;
   background: #ff5a5f;
-  animation: dots 1.2s infinite ease-in-out;
+
 }
 
 .loading-spinner.dots .spinner::before {
   left: 8px;
-  animation-delay: -0.16s;
+
 }
 
 .loading-spinner.dots .spinner::after {
   left: 32px;
-  animation-delay: 0.16s;
+
 }
 
-@keyframes dots {
-  0%, 80%, 100% {
-    transform: scale(0);
-  }
-  40% {
-    transform: scale(1);
-  }
-}
 
-/* Pulse animation */
-.loading-spinner.pulse .spinner {
-  background: #ff5a5f;
-  border: none;
+
+/* Static pulse */
+.loading-pulse {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
+  background: var(--holo-accent);
 }
 
 /* Full page overlay */

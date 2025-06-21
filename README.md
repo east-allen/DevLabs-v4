@@ -1,4 +1,4 @@
-# DevLabs Demo inspired by AirBNB
+# DevLabs - Developer Workspace Platform
 
 A full-stack workspace booking platform built with React, Express.js, and PostgreSQL. DevLabs provides a complete innovation workspace platform with user authentication, workspace management, reservation system, and review functionality.
 
@@ -35,7 +35,7 @@ A full-stack workspace booking platform built with React, Express.js, and Postgr
 
 ### 🏗 Database Schema
 
-![Database Schema](./images/airbnb_dbdiagram.png)
+![Database Schema](./images/devlabs_dbdiagram.png)
 
 **Tables:**
 - **Users**: Authentication and profile data
@@ -321,4 +321,4 @@ For support and questions:
 **Built with ❤️ by the DevLabs Team**
 
 ## ⚠️ DISCLAIMER
-**This project is NOT an official submission to any organization, institution, or entity until explicitly stated otherwise by the author with zero ambiguity. This is a personal development project for demonstration and learning purposes only.** 
+**This project is NOT an official submission to any organization, institution, or entity until explicitly stated otherwise by the author with zero ambiguity. This is a personal development project for demonstration and learning purposes only.**

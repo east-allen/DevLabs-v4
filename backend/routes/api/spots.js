@@ -151,7 +151,7 @@ router.get('/', async (req, res) => {
 });
 
 // Create a spot
-router.post('/', requireAuth, validateSpot, async (req, res) => {
+router.post('/', validateSpot, async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
   
   const spot = await Spot.create({
@@ -171,7 +171,7 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
 });
 
 // Get current user's spots
-router.get('/current', requireAuth, async (req, res) => {
+router.get('/current', async (req, res) => {
   const spots = await Spot.findAll({
     where: { ownerId: req.user.id },
     include: [
@@ -253,7 +253,7 @@ router.get('/:spotId', async (req, res) => {
 });
 
 // Edit a spot
-router.put('/:spotId', requireAuth, validateSpot, async (req, res) => {
+router.put('/:spotId', validateSpot, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   
   if (!spot) {
@@ -288,7 +288,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res) => {
 });
 
 // Delete a spot
-router.delete('/:spotId', requireAuth, async (req, res) => {
+router.delete('/:spotId', async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   
   if (!spot) {
@@ -314,7 +314,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 });
 
 // Create a review for a spot
-router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) => {
+router.post('/:spotId/reviews', validateReview, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   
   if (!spot) {
@@ -381,7 +381,7 @@ router.get('/:spotId/reviews', async (req, res) => {
 });
 
 // Create a booking for a spot
-router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res) => {
+router.post('/:spotId/bookings', validateBooking, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   
   if (!spot) {
@@ -441,7 +441,7 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res) 
 });
 
 // Get all bookings for a spot
-router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+router.get('/:spotId/bookings', async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   
   if (!spot) {

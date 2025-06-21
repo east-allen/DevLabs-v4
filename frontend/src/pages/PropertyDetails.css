@@ -3,6 +3,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
+  text-align: center;
 }
 
 /* Property Header */
@@ -75,7 +76,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+
   color: #666;
 }
 
@@ -100,7 +101,7 @@
   color: #666;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+
   font-weight: 500;
 }
 
@@ -143,7 +144,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+
   backdrop-filter: blur(4px);
 }
 
@@ -174,7 +175,7 @@
   border-radius: 6px;
   cursor: pointer;
   opacity: 0.7;
-  transition: all 0.3s ease;
+
   border: 2px solid transparent;
 }
 
@@ -193,6 +194,7 @@
   grid-template-columns: 2fr 1fr;
   gap: 3rem;
   align-items: start;
+  text-align: left;
 }
 
 .property-info {
@@ -262,6 +264,293 @@
   width: 20px;
 }
 
+/* Reviews Section */
+.reviews-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.reviews-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.add-review-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.add-review-btn:hover {
+  background: #0056b3;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.review-item {
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.reviewer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.reviewer-info h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.review-rating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.review-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.review-date {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.delete-review-btn {
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.delete-review-btn:hover {
+  background: #f8d7da;
+}
+
+.review-text {
+  margin: 0;
+  line-height: 1.6;
+  color: #333;
+}
+
+.no-reviews {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 2rem;
+}
+
+.star {
+  color: #ddd;
+  font-size: 1rem;
+}
+
+.star.filled {
+  color: #ffc107;
+}
+
+.star.interactive {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star.interactive:hover {
+  color: #ffc107;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.close-modal-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.close-modal-btn:hover {
+  background: #f8f9fa;
+}
+
+.review-form {
+  padding: 1.5rem;
+}
+
+.rating-input {
+  margin-bottom: 1.5rem;
+}
+
+.rating-input label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.stars-input {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.stars-input .star {
+  font-size: 1.5rem;
+}
+
+.review-text-input {
+  margin-bottom: 1.5rem;
+}
+
+.review-text-input label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.review-text-input textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.review-text-input textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.cancel-btn {
+  padding: 0.75rem 1.5rem;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.cancel-btn:hover {
+  background: #545b62;
+}
+
+.submit-review-btn {
+  padding: 0.75rem 1.5rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.submit-review-btn:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.submit-review-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
 /* Host Info */
 .host-info h2 {
   font-size: 1.5rem;
@@ -313,11 +602,11 @@
 }
 
 .booking-card {
-  background: white;
-  border: 1px solid #e0e0e0;
+  background: var(--bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .price-info {
@@ -330,11 +619,11 @@
 .price {
   font-size: 2rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .period {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 1rem;
 }
 
@@ -359,30 +648,32 @@
 
 .input-group label {
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
   font-size: 0.9rem;
 }
 
 .input-group input,
 .input-group select {
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+
 }
 
 .input-group input:focus,
 .input-group select:focus {
   outline: none;
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(255, 90, 95, 0.2);
 }
 
 /* Price Breakdown */
 .price-breakdown {
   padding: 1rem 0;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: 1rem;
 }
 
@@ -390,15 +681,15 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .price-row.total {
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.1rem;
   padding-top: 0.5rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: 0.5rem;
 }
 
@@ -406,30 +697,33 @@
 .book-btn {
   width: 100%;
   padding: 1rem;
-  background: #ff6b6b;
+  background: var(--gradient-primary);
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+
   margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(255, 90, 95, 0.3);
 }
 
 .book-btn:hover:not(:disabled) {
-  background: #ff5252;
+  background: var(--gradient-primary-hover);
   transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 90, 95, 0.4);
 }
 
 .book-btn:disabled {
-  background: #ccc;
+  background: var(--bg-tertiary);
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 /* Error Message */
@@ -460,7 +754,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+
 }
 
 .back-btn:hover {
@@ -557,20 +851,4 @@
 /* Loading States */
 .property-details-container .loading-spinner {
   margin: 3rem auto;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.property-details-container {
-  animation: fadeIn 0.5s ease;
 }

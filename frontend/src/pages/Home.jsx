@@ -1,27 +1,28 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchProperties } from '../store/slices/propertySlice';
+import { fetchSpots } from '../store/slices/spotsSlice';
 import PropertyCard from '../components/Property/PropertyCard';
-import SearchBar from '../components/Search/SearchBar';
+import BookingBar from '../components/Search/BookingSearchBar';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
+import WorkspaceGallery from '../components/WorkspaceGallery';
 import './Home.css';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { properties, isLoading, error } = useSelector((state) => state.properties);
-  const [featuredProperties, setFeaturedProperties] = useState([]);
+  const { spots, isLoading, error } = useSelector((state) => state.spots);
+  const [featuredSpots, setFeaturedSpots] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchProperties());
+    dispatch(fetchSpots());
   }, [dispatch]);
 
   useEffect(() => {
-    // Get first 6 properties as featured
-    if (properties.length > 0) {
-      setFeaturedProperties(properties.slice(0, 6));
+    // Get first 6 spots as featured
+    if (spots.length > 0) {
+      setFeaturedSpots(spots.slice(0, 6));
     }
-  }, [properties]);
+  }, [spots]);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -34,7 +35,12 @@ const Home = () => {
         <div className="hero-content">
           <h1>Discover Your Next Innovation Hub</h1>
           <p>Find inspiring workspaces and collaborative environments designed for productivity and creativity</p>
-          <SearchBar />
+          
+          {/* Booking Bar */}
+          <BookingBar onBooking={(bookingData) => {
+            console.log('Booking data:', bookingData);
+            // Handle booking logic here
+          }} />
         </div>
         <div className="hero-image">
           {/* Hero image removed */}
@@ -47,17 +53,17 @@ const Home = () => {
           <h2>Featured Workspaces</h2>
           {error && (
             <div className="error-message">
-              <p>Error loading properties: {error}</p>
-              <button onClick={() => dispatch(fetchProperties())} className="retry-btn">
+              <p>Error loading spots: {error}</p>
+              <button onClick={() => dispatch(fetchSpots())} className="retry-btn">
                 Try Again
               </button>
             </div>
           )}
           
-          {featuredProperties.length > 0 ? (
+          {featuredSpots.length > 0 ? (
             <div className="workspaces-grid">
-              {featuredProperties.map((property) => (
-                <PropertyCard key={property.id} property={property} />
+              {featuredSpots.map((spot) => (
+                <PropertyCard key={spot.id} property={spot} />
               ))}
             </div>
           ) : (
@@ -71,10 +77,10 @@ const Home = () => {
             )
           )}
 
-          {properties.length > 6 && (
+          {spots.length > 6 && (
             <div className="view-all">
-              <Link to="/search" className="view-all-btn">
-                View All Workspaces
+              <Link to="/" className="view-all-btn">
+                Explore More
               </Link>
             </div>
           )}
@@ -99,6 +105,15 @@ const Home = () => {
               <p>Tech-enabled spaces for breakthrough thinking</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Workspace Gallery Section */}
+      <section className="workspace-gallery-section">
+        <div className="container">
+          <h2>Inspiring Workspace Environments</h2>
+          <p>Discover the variety of professional spaces available for your next project</p>
+          <WorkspaceGallery />
         </div>
       </section>
 

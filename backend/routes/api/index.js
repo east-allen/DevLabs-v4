@@ -6,7 +6,9 @@ const sessionRouter = require('./session.js');
 const spotsRouter = require('./spots.js');
 const reviewsRouter = require('./reviews.js');
 const bookingsRouter = require('./bookings.js');
+const csrfRouter = require('./csrf.js');
 
+router.use('/csrf', csrfRouter);
 router.use('/users', usersRouter);
 router.use('/session', sessionRouter);
 router.use('/spots', spotsRouter);

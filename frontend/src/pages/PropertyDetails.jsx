@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPropertyById } from '../store/slices/propertySlice';
+import { fetchSpotById } from '../store/slices/spotsSlice';
 import { createBooking } from '../store/slices/bookingSlice';
+import { fetchReviewsBySpotId, createReview, deleteReview } from '../store/slices/reviewsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faStar, 
@@ -15,15 +16,27 @@ import {
   faSwimmingPool, 
   faDumbbell,
   faUtensils,
+  faTv,
   faSnowflake,
+  faFire,
   faPaw,
+  faSmokingBan,
+  faCar,
+  faGamepad,
+  faHotTub,
+  faMountain,
+  faTree,
+  faWater,
   faBalanceScale,
   faLeaf,
-  faHotTub,
   faChevronLeft,
   faChevronRight,
   faHeart,
-  faShare
+  faShare,
+  faPlus,
+  faTimes,
+  faTrash,
+  faEdit
 } from '@fortawesome/free-solid-svg-icons';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 import './PropertyDetails.css';
@@ -33,26 +46,33 @@ const PropertyDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
-  const { selectedProperty, isLoading, error } = useSelector((state) => state.properties);
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
-  const { isLoading: bookingLoading } = useSelector((state) => state.bookings);
+  const { selectedProperty, loading, error } = useSelector(state => state.spots);
+  const { loading: bookingLoading } = useSelector(state => state.bookings);
+  const { reviews, loading: reviewsLoading } = useSelector(state => state.reviews);
+  const { isAuthenticated, user } = useSelector(state => state.auth);
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewData, setReviewData] = useState({
+    review: '',
+    stars: 5
+  });
   const [bookingData, setBookingData] = useState({
     checkIn: '',
     checkOut: '',
     guests: 1
   });
   const [showBookingForm, setShowBookingForm] = useState(false);
-  const [isFavorited, setIsFavorited] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [numberOfNights, setNumberOfNights] = useState(0);
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchPropertyById(id));
+      dispatch(fetchSpotById(id));
+      dispatch(fetchReviewsBySpotId(id));
     }
-  }, [id, dispatch]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (bookingData.checkIn && bookingData.checkOut && selectedProperty) {
@@ -105,9 +125,9 @@ const PropertyDetails = () => {
     
     try {
       await dispatch(createBooking({
-        propertyId: selectedProperty.id,
-        checkIn: bookingData.checkIn,
-        checkOut: bookingData.checkOut,
+        spotId: selectedProperty.id,
+        startDate: bookingData.checkIn,
+        endDate: bookingData.checkOut,
         guests: bookingData.guests,
         totalPrice
       })).unwrap();
@@ -140,7 +160,7 @@ const PropertyDetails = () => {
       navigator.share({
         title: selectedProperty.title,
         text: selectedProperty.description,
-        url: window.location.href
+        url: window.location.href,
       });
     } else {
       navigator.clipboard.writeText(window.location.href);
@@ -148,7 +168,47 @@ const PropertyDetails = () => {
     }
   };
 
-  if (isLoading) {
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    
+    try {
+      await dispatch(createReview({ spotId: id, reviewData })).unwrap();
+      setShowReviewModal(false);
+      setReviewData({ review: '', stars: 5 });
+      // Refresh reviews
+      dispatch(fetchReviewsBySpotId(id));
+    } catch (error) {
+      console.error('Failed to create review:', error);
+    }
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    if (window.confirm('Are you sure you want to delete this review?')) {
+      try {
+        await dispatch(deleteReview(reviewId)).unwrap();
+        dispatch(fetchReviewsBySpotId(id));
+      } catch (error) {
+        console.error('Failed to delete review:', error);
+      }
+    }
+  };
+
+  const renderStars = (rating, interactive = false, onStarClick = null) => {
+    return Array.from({ length: 5 }, (_, index) => (
+      <FontAwesomeIcon
+        key={index}
+        icon={faStar}
+        className={`star ${index < rating ? 'filled' : ''} ${interactive ? 'interactive' : ''}`}
+        onClick={interactive && onStarClick ? () => onStarClick(index + 1) : undefined}
+      />
+    ));
+  };
+
+  if (loading) {
     return (
       <div className="property-details-container">
         <LoadingSpinner size="large" message="Loading property details..." />
@@ -183,6 +243,8 @@ const PropertyDetails = () => {
       </div>
     );
   }
+
+  const userHasReviewed = reviews.some(review => review.userId === user?.id);
 
   return (
     <div className="property-details-container">
@@ -292,6 +354,69 @@ const PropertyDetails = () => {
               </div>
             )}
             
+            <div className="reviews-section">
+              <div className="reviews-header">
+                <h2>
+                  <FontAwesomeIcon icon={faStar} className="star filled" />
+                  {selectedProperty.avgRating ? selectedProperty.avgRating.toFixed(1) : 'No rating'} • {reviews.length} review{reviews.length !== 1 ? 's' : ''}
+                </h2>
+                {isAuthenticated && !userHasReviewed && (
+                  <button 
+                    className="add-review-btn"
+                    onClick={() => setShowReviewModal(true)}
+                  >
+                    <FontAwesomeIcon icon={faPlus} />
+                    Add Review
+                  </button>
+                )}
+              </div>
+              
+              {reviewsLoading ? (
+                <LoadingSpinner size="small" message="Loading reviews..." />
+              ) : (
+                <div className="reviews-list">
+                  {reviews.length === 0 ? (
+                    <p className="no-reviews">No reviews yet. Be the first to review!</p>
+                  ) : (
+                    reviews.map((review) => (
+                      <div key={review.id} className="review-item">
+                        <div className="review-header">
+                          <div className="reviewer-info">
+                            <img 
+                              src={review.User?.profileImage || '/api/placeholder/40/40'} 
+                              alt={review.User?.firstName}
+                              className="reviewer-avatar"
+                            />
+                            <div>
+                              <h4>{review.User?.firstName} {review.User?.lastName}</h4>
+                              <div className="review-rating">
+                                {renderStars(review.stars)}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="review-actions">
+                            <span className="review-date">
+                              {new Date(review.createdAt).toLocaleDateString()}
+                            </span>
+                            {user?.id === review.userId && (
+                              <button 
+                                className="delete-review-btn"
+                                onClick={() => handleDeleteReview(review.id)}
+                                title="Delete review"
+                              >
+                                <FontAwesomeIcon icon={faTrash} />
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                        <p className="review-text">{review.review}</p>
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
+
             <div className="host-info">
               <h2>Meet your host</h2>
               <div className="host-card">
@@ -391,6 +516,63 @@ const PropertyDetails = () => {
           </div>
         </div>
       </div>
+
+      {/* Review Modal */}
+      {showReviewModal && (
+        <div className="modal-overlay" onClick={() => setShowReviewModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Add a Review</h3>
+              <button 
+                className="close-modal-btn"
+                onClick={() => setShowReviewModal(false)}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            </div>
+            
+            <form onSubmit={handleReviewSubmit} className="review-form">
+              <div className="rating-input">
+                <label>Rating</label>
+                <div className="stars-input">
+                  {renderStars(reviewData.stars, true, (rating) => 
+                    setReviewData(prev => ({ ...prev, stars: rating }))
+                  )}
+                </div>
+              </div>
+              
+              <div className="review-text-input">
+                <label htmlFor="review-text">Your Review</label>
+                <textarea
+                  id="review-text"
+                  value={reviewData.review}
+                  onChange={(e) => setReviewData(prev => ({ ...prev, review: e.target.value }))}
+                  placeholder="Share your experience..."
+                  rows={4}
+                  required
+                />
+              </div>
+              
+              <div className="modal-actions">
+                <button 
+                  type="button" 
+                  className="cancel-btn"
+                  onClick={() => setShowReviewModal(false)}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="submit-review-btn"
+                  disabled={!reviewData.review.trim()}
+                >
+                  Submit Review
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

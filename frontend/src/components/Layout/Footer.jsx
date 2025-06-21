@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
@@ -9,7 +10,29 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-content">
           <div className="footer-section">
-            <h3>DevLabs</h3>
+            <div className="footer-logo">
+              <img 
+                src="/favicon.png" 
+                alt="DevLabs Favicon" 
+                className="footer-favicon"
+                style={{
+                  height: '20px',
+                  width: '20px',
+                  objectFit: 'contain',
+                  marginRight: '8px'
+                }}
+              />
+              <img 
+                src="/devlabs-logo.jpg" 
+                alt="DevLabs" 
+                className="footer-wordmark"
+                style={{
+                  height: '28px',
+                  width: 'auto',
+                  objectFit: 'contain'
+                }}
+              />
+            </div>
             <p>Empowering innovation through collaborative workspaces. Connect, create, and transform ideas into reality in inspiring environments designed for productivity.</p>
             <div className="social-links">
               <a href="#" className="social-link">

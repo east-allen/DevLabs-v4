@@ -1,81 +1,52 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const API_BASE_URL = 'http://localhost:8000/api';
+import { bookingsAPI, spotsAPI } from '../../utils/api';
 
 // Async thunks
 export const fetchUserBookings = createAsyncThunk(
   'bookings/fetchUserBookings',
-  async (_, { rejectWithValue, getState }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const { auth } = getState();
-      const response = await axios.get(`${API_BASE_URL}/bookings/user`, {
-        headers: {
-          Authorization: `Bearer ${auth.token}`,
-        },
-      });
+      const response = await bookingsAPI.getUserBookings();
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message);
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch bookings');
     }
   }
 );
 
 export const createBooking = createAsyncThunk(
   'bookings/createBooking',
-  async (bookingData, { rejectWithValue, getState }) => {
+  async (bookingData, { rejectWithValue }) => {
     try {
-      const { auth } = getState();
-      const response = await axios.post(
-        `${API_BASE_URL}/bookings`,
-        bookingData,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
-      );
+      const { spotId, ...bookingDetails } = bookingData;
+      const response = await spotsAPI.createBooking(spotId, bookingDetails);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message);
+      return rejectWithValue(error.response?.data?.message || 'Failed to create booking');
     }
   }
 );
 
 export const updateBooking = createAsyncThunk(
   'bookings/updateBooking',
-  async ({ id, bookingData }, { rejectWithValue, getState }) => {
+  async ({ id, bookingData }, { rejectWithValue }) => {
     try {
-      const { auth } = getState();
-      const response = await axios.put(
-        `${API_BASE_URL}/bookings/${id}`,
-        bookingData,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
-      );
+      const response = await bookingsAPI.update(id, bookingData);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message);
+      return rejectWithValue(error.response?.data?.message || 'Failed to update booking');
     }
   }
 );
 
 export const cancelBooking = createAsyncThunk(
   'bookings/cancelBooking',
-  async (id, { rejectWithValue, getState }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      const { auth } = getState();
-      await axios.delete(`${API_BASE_URL}/bookings/${id}`, {
-        headers: {
-          Authorization: `Bearer ${auth.token}`,
-        },
-      });
+      await bookingsAPI.delete(id);
       return id;
     } catch (error) {
-      return rejectWithValue(error.response.data.message);
+      return rejectWithValue(error.response?.data?.message || 'Failed to cancel booking');
     }
   }
 );
